@@ -1,5 +1,11 @@
 <?php
     session_start();
+
+    $page = 'candidates/register.php';
+
+    if(isset($_SESSION['page'])) {
+        $page = $_SESSION['page'];
+    }
     if(!isset($_SESSION['user_id'])) {
         header('Location: ../login.php');
         exit;
@@ -155,13 +161,6 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div>
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -264,12 +263,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <?php 
-                                // include('candidates/register.php')
-                                if (!isset($_SESSION['page'])){
-                                    include('candidates/register.php');
-                                } else {
-                                    include($_SESSION['page']);
-                                } 
+                                include($page);
                             ?>
                         </div>
                     </div>

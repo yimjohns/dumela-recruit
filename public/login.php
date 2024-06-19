@@ -14,7 +14,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if($user->login()) {
         $_SESSION['user_id'] = $user->id;
         $_SESSION['username'] = $user->username;
-        $_SESSION['page'] = 'register-candidates.php';
+        $_SESSION['page'] = 'candidates/register.php';
         header('Location: dashboard/index.php');
     } else {
         echo 'Login failed!';
