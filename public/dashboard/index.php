@@ -86,8 +86,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Candidates Actions:</h6>
-                        <a class="collapse-item" href="register.php">New</a>
-                        <a class="collapse-item" href="cards.html">List</a>
+                        <a class="collapse-item" href="?page=new">New</a>
+                        <a class="collapse-item" href="?page=list">List</a>
                     </div>
                 </div>
             </li>
@@ -224,15 +224,19 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
                         <div class="col-md-12">
-                            <?php 
-                                include($page);
+                            <?php
+                                if (isset($_GET['page']) && $_GET['page'] == 'new') {
+                                    include 'candidates/register.php';
+                                } elseif (isset($_GET['page']) && $_GET['page'] == 'list') {
+                                    include 'candidates/list.php';
+                                } else{
+                                    include $page;
+                                }
                             ?>
                         </div>
                     </div>
