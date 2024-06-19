@@ -92,7 +92,7 @@
         <br>
         <div class="row">
             <div class="col">
-                <button type="submit" class="btn btn-success btn-block">Create Candidate</button>
+                <button type="submit" class="btn btn-info btn-block">Create Candidate</button>
             </div>
         </div>  
     </form>

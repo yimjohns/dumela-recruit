@@ -36,6 +36,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
