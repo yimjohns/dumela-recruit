@@ -12,9 +12,9 @@
     $user = new User($db);
     $candidate = new Candidate($db);
 
-    if(isset($_SESSION['page'])) {
-        $page = $_SESSION['page'];
-    }
+    // if(isset($_SESSION['page'])) {
+    //     $page = $_SESSION['page'];
+    // }
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -35,6 +35,12 @@
                 $candidate->job_title = $_POST['job_title'];
                 $candidate->level = $_POST['level'];
                 $candidate->resume = $_FILES['resume']['name'];
+
+                $candidate->rate = $_POST['rate'];
+                $candidate->rate_period = $_POST['rate_period'];
+                $candidate->status = $_POST['status'];
+                $candidate->outsource_rate = $_POST['outsource_rate'];
+                $candidate->outsource_rate_period = $_POST['outsource_rate_period'];
     
                 // Handle file upload
                 if ($_FILES['resume']['name']) {
@@ -43,8 +49,13 @@
                 } else {
                     $candidate->resume = $_POST['existing_resume'];
                 }
-    
-                $candidate->update();
+                
+                try{
+                    $candidate->update();
+                    echo("<meta http-equiv='refresh' content='.5'>");
+                }catch(PDOException $e){
+                    echo($e);
+                }
             }
         }
     }
@@ -358,24 +369,10 @@
                     <label>Status</label>
                     <select name="status" class="form-control" required>
                         <option value="Entry" <?php echo ($row['status'] == 'Interviewed (Selected)') ? 'selected' : ''; ?>>Interviewed (Selected)</option>
-                        <option value="Junior" <?php echo ($row['status'] == 'Interview (Not Selected)') ? 'selected' : ''; ?>>Interview (Not Selected)</option>
+                        <option value="Junior" <?php echo ($row['status'] == 'Interviewed (Not Selected)') ? 'selected' : ''; ?>>Interviewed (Not Selected)</option>
                         <option value="Intermediate" <?php echo ($row['status'] == 'Not Interviewed') ? 'selected' : ''; ?>>Not Interviewed</option>
                     </select>
                 </div>
-                    <!-- <input type="text" name="rate_period" class="form-control" value="<?php // echo $row['rate_period']; ?>" required> -->
-                <!-- </div> -->
-
-            <!-- </div> -->
-            <!-- <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label>Status</label>
-                    <select name="status" class="form-control" required>
-                        <option value="Entry" <?php // echo ($row['status'] == 'Interviewed (Selected)') ? 'selected' : ''; ?>>Interviewed (Selected)</option>
-                        <option value="Junior" <?php // echo ($row['status'] == 'Interview (Not Selected)') ? 'selected' : ''; ?>>Interview (Not Selected)</option>
-                        <option value="Intermediate" <?php // echo ($row['status'] == 'Not Interviewed') ? 'selected' : ''; ?>>Not Interviewed</option>
-                    </select>
-                </div>
-            </div> -->
         </div>
 
         <div class="form-row">

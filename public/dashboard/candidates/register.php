@@ -25,6 +25,11 @@
             $candidate->city = $_POST['city'];
             $candidate->job_title = $_POST['job_title'];
             $candidate->level = $_POST['level'];
+            $candidate->rate = $_POST['rate'];
+            $candidate->rate_period = $_POST['rate_period'];
+            $candidate->status = $_POST['status'];
+            $candidate->outsource_rate = $_POST['outsource_rate'];
+            $candidate->outsource_rate_period = $_POST['outsource_rate_period'];
             $candidate->resume = $_FILES['resume']['name'];
 
             // Handle file upload
@@ -337,15 +342,15 @@
                 <div class="form-group">
                     <label>Status</label>
                     <select name="status" class="form-control" required>
-                        <option value="Entry">Interviewed (Selected)</option>
-                        <option value="Junior">Interview (Not Selected)</option>
-                        <option value="Intermediate">Not Interviewed</option>
+                        <option value="Not Interviewed">Not Interviewed</option>
+                        <option value="Interviewed (Not Selected)">Interviewed (Not Selected)</option>
+                        <option value="Interviewed (Selected)">Interviewed (Selected)</option>    
                         <!-- <option value="Senior">Senior</option> -->
                     </select>
                 </div>
             </div>
         </div>  
-             
+
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">

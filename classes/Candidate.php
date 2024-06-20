@@ -14,7 +14,15 @@ class Candidate {
     public $job_title;
     public $level;
     public $resume;
+
+    public $rate;
+    public $rate_period;
+    public $status;
+    public $outsource_rate;
+    public $outsource_rate_period;
+
     public $created_at;
+    
 
     public function __construct($db) {
         $this->conn = $db;
@@ -31,6 +39,11 @@ class Candidate {
             city = :city,
             job_title = :job_title,
             level = :level,
+            rate = :rate,
+            rate_period = :rate_period,
+            status = :status,
+            outsource_rate = :outsource_rate,
+            outsource_rate_period = :outsource_rate_period,
             resume = :resume';
 
         $stmt = $this->conn->prepare($query);
@@ -44,6 +57,14 @@ class Candidate {
         $this->city = htmlspecialchars(strip_tags($this->city));
         $this->job_title = htmlspecialchars(strip_tags($this->job_title));
         $this->level = htmlspecialchars(strip_tags($this->level));
+
+        $this->rate = htmlspecialchars(strip_tags($this->rate));
+        $this->rate_period = htmlspecialchars(strip_tags($this->rate_period));
+        // $this->status = htmlspecialchars(strip_tags($this->status));
+        $this->status = $this->status;
+        $this->outsource_rate = htmlspecialchars(strip_tags($this->outsource_rate));
+        $this->outsource_rate_period = htmlspecialchars(strip_tags($this->outsource_rate_period));
+
         $this->resume = htmlspecialchars(strip_tags($this->resume));
 
         $stmt->bindParam(':first_name', $this->first_name);
@@ -55,6 +76,13 @@ class Candidate {
         $stmt->bindParam(':city', $this->city);
         $stmt->bindParam(':job_title', $this->job_title);
         $stmt->bindParam(':level', $this->level);
+
+        $stmt->bindParam(':rate', $this->rate);
+        $stmt->bindParam(':rate_period', $this->rate_period);
+        $stmt->bindParam(':status', $this->status);
+        $stmt->bindParam(':outsource_rate', $this->outsource_rate);
+        $stmt->bindParam(':outsource_rate_period', $this->outsource_rate_period);
+
         $stmt->bindParam(':resume', $this->resume);
 
         if($stmt->execute()) {
@@ -99,6 +127,11 @@ class Candidate {
             city = :city,
             job_title = :job_title,
             level = :level,
+            rate = :rate,
+            rate_period = :rate_period,
+            status = :status,
+            outsource_rate = :outsource_rate,
+            outsource_rate_period = :outsource_rate_period,
             resume = :resume
             WHERE id = :id';
 
@@ -114,6 +147,14 @@ class Candidate {
         $this->job_title = htmlspecialchars(strip_tags($this->job_title));
         $this->level = htmlspecialchars(strip_tags($this->level));
         $this->resume = htmlspecialchars(strip_tags($this->resume));
+
+        $this->rate = htmlspecialchars(strip_tags($this->rate));
+        $this->rate_period = htmlspecialchars(strip_tags($this->rate_period));
+        // $this->status = htmlspecialchars(strip_tags($this->status));
+        $this->status = $this->status;
+        $this->outsource_rate = htmlspecialchars(strip_tags($this->outsource_rate));
+        $this->outsource_rate_period = htmlspecialchars(strip_tags($this->outsource_rate_period));
+
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         $stmt->bindParam(':first_name', $this->first_name);
@@ -126,6 +167,13 @@ class Candidate {
         $stmt->bindParam(':job_title', $this->job_title);
         $stmt->bindParam(':level', $this->level);
         $stmt->bindParam(':resume', $this->resume);
+
+        $stmt->bindParam(':rate', $this->rate);
+        $stmt->bindParam(':rate_period', $this->rate_period);
+        $stmt->bindParam(':status', $this->status);
+        $stmt->bindParam(':outsource_rate', $this->outsource_rate);
+        $stmt->bindParam(':outsource_rate_period', $this->outsource_rate_period);
+
         $stmt->bindParam(':id', $this->id);
 
         if($stmt->execute()) {
