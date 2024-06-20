@@ -5,44 +5,71 @@ include_once '../classes/User.php';
 $database = new Database();
 $db = $database->connect();
 $user = new User($db);
-$error = '';
+$status = [];
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $username = $_POST['username'];
 
     if (!preg_match("/^[^@]+@dumelacorp\.com$/", $username)) {
-        $error = "Username must be an email ending with @dumelacorp.com";
+        $status = [
+                'type' => "error",
+                'message' => "Username must be an email ending with @dumelacorp.com"
+            ];
     }
 
-    if (!isset($error) || $error == '') {
+    if (!$status['message']) {
         $user->username = $_POST['username'];
         $user->password = $_POST['password'];
 
         if($user->register()) {
-            echo 'User registered successfully!';
+            $status = [
+                'type' => 'success',
+                'message' => 'User registered successfully!'
+            ];
         } else {
-            die("It got here!");
-            echo 'User registration failed!';
+            $status = [
+                'type' => 'error',
+                'message' => 'User registration failed!'
+            ];
         }
-    } else {
-        echo "<div class='alert alert-danger'>$error</div>";
+    } 
+
+    if ($status['type'] == 'error'){
+        echo "<div class='alert alert-danger'>$status['message']</div>";
+    }else{
+        echo "<div class='alert alert-success'>$status['message']</div>";
     }
+    // else {
+    //     echo "<div class='alert alert-danger'>$error</div>";
+    // }
 }
 ?>
-
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">   
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head> -->
 <?php require('../templates/header.php'); ?>
 <body>
 <div class="container">
     <h2>Register</h2>
     <form method="post">
-
+        <!-- <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" class="form-control" required>
+        </div> -->
         <div class="form-group">
             <label>Email (Username)</label>
             <input type="email" id="username" class="form-control" name="username" placeholder="example@dumelacorp.com" required>
             <small id="emailHelp" class="form-text text-muted">Must end with @dumelacorp.com</small>
         </div>
 
+        <!-- <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" required>
+        </div> -->
         <div class="form-group">
             <label>Password</label>
             <div class="input-group">

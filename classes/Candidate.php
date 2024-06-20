@@ -71,6 +71,23 @@ class Candidate {
         return $stmt;
     }
 
+    public function getCandidateDetailsById($id) {
+        // $pdo = getDbConnection();
+        
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM candidates WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            $candidate = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return $candidate;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
     public function update() {
         $query = 'UPDATE ' . $this->table . ' SET
             first_name = :first_name,

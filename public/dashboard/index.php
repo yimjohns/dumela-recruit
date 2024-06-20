@@ -29,6 +29,9 @@
 
     <title>Dumela Recruitments - Dashboard</title>
 
+    <link rel="icon" sizes="192x192" href="../../assets/img/dum-favicon.png" type="image/png"/>
+    <link rel="shortcut icon" href="../../assets/img/dum-favicon.png" type="image/png"/>
+    <link rel="apple-touch-icon" href="../../assets/img/dum-favicon.png" type="image/png"/>
     <!-- Custom fonts for this template-->
     <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -229,15 +232,27 @@
                     <!-- Content Row -->
                     <div class="row">
                         <div class="col-md-12">
-                            <?php
-                                if (isset($_GET['page']) && $_GET['page'] == 'new') {
-                                    include 'candidates/register.php';
-                                } elseif (isset($_GET['page']) && $_GET['page'] == 'list') {
-                                    include 'candidates/list.php';
-                                } else{
-                                    include $page;
-                                }
-                            ?>
+                            <div class="main-content">
+                                <?php
+                                    // if (isset($_GET['id'])){
+                                    //     $id = $_GET['id'];
+                                    //     include 'candidates/update.php';
+                                    // }
+                                    if (isset($_GET['page'])){
+                                        if ($_GET['page'] == 'new'){
+                                            include 'candidates/register.php';
+                                        } elseif ($_GET['page'] == 'list'){
+                                            include 'candidates/list.php';
+                                        } elseif ($_GET['page'] == 'update'){
+                                            include 'candidates/update.php';
+                                        }else {
+                                            echo 'Oops! Sorry, page not found.';
+                                        }
+                                    } else {
+                                        include $page;
+                                    }
+                                ?>
+                            </div>
                         </div>
                     </div>
                     
@@ -299,11 +314,11 @@
     <script src="assets/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="assets/vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="assets/vendor/chart.js/Chart.min.js"></script> -->
 
     <!-- Page level custom scripts -->
-    <script src="assets/js/demo/chart-area-demo.js"></script>
-    <script src="assets/js/demo/chart-pie-demo.js"></script>
+    <!-- <script src="assets/js/demo/chart-area-demo.js"></script> -->
+    <!-- <script src="assets/js/demo/chart-pie-demo.js"></script> -->
 
 </body>
 
