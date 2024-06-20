@@ -17,6 +17,7 @@
     $database = new Database();
     $db = $database->connect();
     $user = new User($db);
+
 ?>
 
 <head>
@@ -227,6 +228,28 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <?php
+                            if(isset($_SESSION['alert']))
+                            {
+                                $message = $_SESSION['alert']['message'];
+                                if ($_SESSION['alert']['type'] == 'error'){
+                                    echo('<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Oops! </strong>' . $message . '
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>');
+                                } else {
+                                    echo('<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Yay! </strong>' . $message . '
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>');
+                                }
+                                unset($_SESSION['alert']);
+                            }
+                        ?>
                     </div>
 
                     <!-- Content Row -->
@@ -234,10 +257,13 @@
                         <div class="col-md-12">
                             <div class="main-content">
                                 <?php
-                                    // if (isset($_GET['id'])){
-                                    //     $id = $_GET['id'];
-                                    //     include 'candidates/update.php';
-                                    // }
+                                    if (!isset($_GET['id']) && !isset($_GET['page'])){
+                                        include $page;
+                                    }
+                                    if (isset($_GET['id'])){
+                                        $id = $_GET['id'];
+                                        include 'candidates/update.php';
+                                    }
                                     if (isset($_GET['page'])){
                                         if ($_GET['page'] == 'new'){
                                             include 'candidates/register.php';
@@ -248,8 +274,6 @@
                                         }else {
                                             echo 'Oops! Sorry, page not found.';
                                         }
-                                    } else {
-                                        include $page;
                                     }
                                 ?>
                             </div>

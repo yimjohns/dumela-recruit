@@ -99,6 +99,19 @@ class Candidate {
         return $stmt;
     }
 
+    public function getTotalCandidates(){
+        try{
+            $query = 'SELECT COUNT(*) AS total FROM ' . $this->table;
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $total_candidates = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $total_candidates['total'];
+        }catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
     public function getCandidateDetailsById($id) {
         // $pdo = getDbConnection();
         

@@ -1,17 +1,16 @@
 <?php 
     session_start();
+
     if(!isset($_SESSION['user_id'])) {
         header('Location: ../login.php');
         exit;
     }
     
     include_once '../../config/Database.php';
-    // include_once '../../../classes/User.php';
     include_once '../../classes/Candidate.php';
     
     $database = new Database();
     $db = $database->connect();
-    // $user = new User($db);
     $candidate = new Candidate($db);
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -35,12 +34,17 @@
             // Handle file upload
             $target_dir = "../../uploads/";
             $target_file = $target_dir . basename($_FILES["resume"]["name"]);
-            // die("I am moving the files now...");
-            // $candidate->create();
-            // echo("Candidate created");
+
             if (move_uploaded_file($_FILES["resume"]["tmp_name"], $target_file)) {
-                $candidate->create();
-                echo("Candidate created");
+                try{
+                    $candidate->create();
+                    echo("<meta http-equiv='refresh' content='.5'>");
+                    $_SESSION['alert']['type'] = 'success';
+                    $_SESSION['alert']['message'] = "Candidate created";
+                }catch(PDOException $e){
+                    $_SESSION['alert']['type'] = 'error';
+                    $_SESSION['alert']['message'] = "Something went wrong. We couldn't save the data.";
+                }
             }
         }
     }
@@ -331,7 +335,7 @@
             </div>
         </div> 
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label>Rate</label>
@@ -340,18 +344,66 @@
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <label>Status</label>
+                   <label>Status</label>
                     <select name="status" class="form-control" required>
                         <option value="Not Interviewed">Not Interviewed</option>
                         <option value="Interviewed (Not Selected)">Interviewed (Not Selected)</option>
                         <option value="Interviewed (Selected)">Interviewed (Selected)</option>    
-                        <!-- <option value="Senior">Senior</option> -->
                     </select>
                 </div>
             </div>
-        </div>  
+        </div>    -->
 
-        <div class="row">
+        <div class="form-row">
+            <!-- <div class="col-md-6 col-sm-12"> -->           
+                <div class="form-group col-md-3 col-sm-6">
+                    <label>Rate (NGN)</label>
+                    <input type="number" name="rate" placeholder='0.00' min='0' value='0.00' step='0.01' class="form-control" required>
+                </div>
+                <div class="form-group col-md-3 col-sm-6">
+                    <label>Per</label>
+                    <select name="rate_period" class="form-control" required>
+                        <option value="Hour">Hour</option>
+                        <option value="Day">Day</option>
+                        <option value="Week">Week</option>
+                        <option value="Month">Month</option>
+                        <option value="Year">Year</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label>Status</label>
+                    <select name="status" class="form-control" required>
+                        <option value="Not Interviewed">Not Interviewed</option>
+                        <option value="Interviewed (Not Selected)">Interviewed (Not Selected)</option>
+                        <option value="Interviewed (Selected)">Interviewed (Selected)</option>
+                    </select>
+                </div>
+        </div>
+
+        <div class="form-row">
+            <!-- <div class="col-md-6 col-sm-12"> -->
+                <div class="form-group col-md-3 col-sm-6">
+                    <label>Outsource Rate (NGN)</label>
+                    <input type="number" step='0.01' placeholder='0.00' value='0.00' name="outsource_rate" class="form-control" required>
+                </div>
+
+                <div class="form-group col-md-3 col-sm-6">
+                    <label>Per</label>
+                    <select name="outsource_rate_period" class="form-control" required>
+                        <option value="Entry">Hour</option>
+                        <option value="Day">Day</option>
+                        <option value="Week">Week</option>
+                        <option value="Month">Month</option>
+                        <option value="Year">Year</option>
+                    </select>
+                </div>
+            <!-- </div> -->
+            <div class="col-md-6 col-sm-12">
+
+            </div>
+        </div>
+
+        <!-- <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label>Outsource Rate</label>
@@ -361,7 +413,7 @@
             <div class="col-md-6 col-sm-12">
 
             </div>
-        </div>  
+        </div>   -->
 
         <div class="row">
             <div class="col-sm-12">

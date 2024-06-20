@@ -15,9 +15,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user_id'] = $user->id;
         $_SESSION['username'] = $user->username;
         $_SESSION['page'] = 'candidates/register.php';
+        $_SESSION['alert'] = [
+            'type' => 'success',
+            'message' => "You're now logged in."
+        ];
         header('Location: dashboard/index.php');
     } else {
-        echo 'Login failed!';
+        $_SESSION['alert'] = [
+            'type' => 'error',
+            'message' => "Log in failed."
+        ];
     }
 }
 ?>

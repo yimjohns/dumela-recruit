@@ -4,7 +4,6 @@
     $page = 'candidates/update.php';
 
     include_once '../../config/Database.php';
-    include_once '../../classes/User.php';
     include_once '../../classes/Candidate.php';
 
     $database = new Database();
@@ -42,6 +41,7 @@
                 $candidate->outsource_rate = $_POST['outsource_rate'];
                 $candidate->outsource_rate_period = $_POST['outsource_rate_period'];
     
+                $target_dir = "../../uploads/";
                 // Handle file upload
                 if ($_FILES['resume']['name']) {
                     $target_file = $target_dir . basename($_FILES["resume"]["name"]);
@@ -53,8 +53,11 @@
                 try{
                     $candidate->update();
                     echo("<meta http-equiv='refresh' content='.5'>");
+                    $_SESSION['alert']['type'] = 'success';
+                    $_SESSION['alert']['message'] = "Candidate data has been updated.";
                 }catch(PDOException $e){
-                    echo($e);
+                    $_SESSION['alert']['type'] = 'error';
+                    $_SESSION['alert']['message'] = "Something went wrong. We couldn't update the data.";
                 }
             }
         }
