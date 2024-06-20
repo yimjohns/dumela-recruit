@@ -368,9 +368,9 @@
                 <div class="form-group col-md-6 col-sm-12">
                     <label>Status</label>
                     <select name="status" class="form-control" required>
-                        <option value="Entry" <?php echo ($row['status'] == 'Interviewed (Selected)') ? 'selected' : ''; ?>>Interviewed (Selected)</option>
-                        <option value="Junior" <?php echo ($row['status'] == 'Interviewed (Not Selected)') ? 'selected' : ''; ?>>Interviewed (Not Selected)</option>
-                        <option value="Intermediate" <?php echo ($row['status'] == 'Not Interviewed') ? 'selected' : ''; ?>>Not Interviewed</option>
+                        <option value="Not Interviewed" <?php echo ($row['status'] == 'Not Interviewed') ? 'selected' : ''; ?>>Not Interviewed</option>
+                        <option value="Interviewed (Not Selected)" <?php echo ($row['status'] == 'Interviewed (Not Selected)') ? 'selected' : ''; ?>>Interviewed (Not Selected)</option>
+                        <option value="Interviewed (Selected)" <?php echo ($row['status'] == 'Interviewed (Selected)') ? 'selected' : ''; ?>>Interviewed (Selected)</option>
                     </select>
                 </div>
         </div>
