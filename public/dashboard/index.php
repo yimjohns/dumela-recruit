@@ -262,7 +262,12 @@
                                     }
                                     if (isset($_GET['id'])){
                                         $id = $_GET['id'];
-                                        include 'candidates/update.php';
+                                        if($_GET['candidate_action'] == 'update'){
+                                            include 'candidates/update.php';
+                                        }elseif ($_GET['candidate_action'] == 'delete'){
+                                            include 'candidates/delete.php';
+                                        }
+                                        
                                     }
                                     if (isset($_GET['page'])){
                                         if ($_GET['page'] == 'new'){
@@ -271,6 +276,8 @@
                                             include 'candidates/list.php';
                                         } elseif ($_GET['page'] == 'update'){
                                             include 'candidates/update.php';
+                                        }elseif ($_GET['page'] == 'delete'){
+                                            include 'candidates/delete.php';
                                         }else {
                                             echo 'Oops! Sorry, page not found.';
                                         }
