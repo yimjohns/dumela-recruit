@@ -20,6 +20,7 @@ class Candidate {
     public $status;
     public $outsource_rate;
     public $outsource_rate_period;
+    public $search_string;
 
     public $created_at;
     
@@ -116,7 +117,7 @@ class Candidate {
         // $pdo = getDbConnection();
         
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM candidates WHERE id = :id");
+            $stmt = $this->conn->prepare("SELECT * FROM " . $this->table . " WHERE id = :id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             
@@ -125,6 +126,30 @@ class Candidate {
             return $candidate;
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function findCandidatesByMultipleParameters($search_string){
+        try{
+            $stmt = $this->conn->prepare("SELECT * FROM " . $this->table . " WHERE first_name LIKE :search_string 
+            OR last_name LIKE :search_string 
+            OR country LIKE :search_string 
+            OR job_title LIKE :search_string 
+            OR level LIKE :search_string
+            ORDER BY created_at DESC
+            ");
+
+            $search_string = "%" . $search_string . "%";
+            $stmt->bindParam(':search_string', $search_string, PDO::PARAM_STR);
+
+            $stmt->execute();
+            
+            // $candidate = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return $stmt;
+        }catch(PDOException $e){
+            echo "Error searching for the candidate.";
             return false;
         }
     }
