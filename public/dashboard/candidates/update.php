@@ -413,7 +413,7 @@
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <br>
-                    <button type="submit" class="btn btn-warning btn-block">Update</button>
+                    <button type="submit" class="btn btn-info btn-block">Update</button>
                 </div>
             </div>
         </div>
