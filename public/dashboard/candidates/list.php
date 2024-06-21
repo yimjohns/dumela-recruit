@@ -13,13 +13,16 @@
     $candidate = new Candidate($db);
 
 
-    $candidates = $candidate->read();
+    
     $total_candidates = $candidate->getTotalCandidates();
     
     $candidates_per_page = 10;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_text'])) {
         $search_string = $_POST['search_text'];
+        $candidates = $candidate->findCandidatesByMultipleParameters($search_string);
+    }else{
+        $candidates = $candidate->read();
     }
 
     // if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['candidate_action']) && $_POST['candidate_action'] == 'delete') {
@@ -40,9 +43,14 @@
 <!-- Topbar Search -->
 <div class="form-row">
     <div class="col">
-        <form class="navbar-search border border-primary rounded-right" method='post'>
+        <form class="navbar-search border border-primary rounded-right rounded-left" method='post'>
             <div class="input-group">
-                <input type="text" name="search_text" class="form-control bg-light border-0 small" placeholder="Search for candidate by first name, last name, country, job title, or level"
+                <input type="text" id="search" name="search_text" class="form-control bg-light border-0 small" placeholder="Search for candidate by first name, last name, country, job title, or level" 
+                value="<?php 
+                        if(isset($_POST['search_text'])){
+                            echo $_POST['search_text'];
+                        }
+                    ?>"
                     aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="submit">
@@ -167,29 +175,54 @@
     </form> -->
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            Are you sure you want to delete this item?
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" onclick="submitForm()">Delete</button>
-        </div>
-        </div>
-    </div>
-    </div>
+    <!-- FUTURE Modal DELETE CONFIRMATION -->
 
-    <script>
+    <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="submitForm()">Delete</button>
+            </div>
+            </div>
+        </div>
+    </div> -->
+
+<!-- FUTURE MODAL DELETE -->
+    <!-- <script>
         function submitForm() {
             document.querySelector('form').submit();
         }
-    </script>
+    </script> -->
+
+
+<!-- FUTURE AJAX CALL ON SEARCH -->
+
+<!-- <script>
+    $(document).ready(function() {
+        $('#search').on('input', function() {
+            let query = $(this).val();
+
+            $.ajax({
+                url: 'search.php',
+                type: 'GET',
+                data: { search_string: query },
+                success: function(data) {
+                    $('#results').html(data);
+                },
+                error: function() {
+                    $('#results').html('<p>An error occurred</p>');
+                }
+            });
+        });
+    });
+</script> -->

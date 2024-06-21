@@ -49,14 +49,14 @@ class Candidate {
 
         $stmt = $this->conn->prepare($query);
 
-        $this->first_name = htmlspecialchars(strip_tags($this->first_name));
-        $this->middle_name = htmlspecialchars(strip_tags($this->middle_name));
-        $this->last_name = htmlspecialchars(strip_tags($this->last_name));
-        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->first_name = ucwords(htmlspecialchars(strip_tags($this->first_name)));
+        $this->middle_name = ucwords(htmlspecialchars(strip_tags($this->middle_name)));
+        $this->last_name = ucwords(htmlspecialchars(strip_tags($this->last_name)));
+        $this->email = ucwords(htmlspecialchars(strip_tags($this->email)));
         $this->country = htmlspecialchars(strip_tags($this->country));
-        $this->state = htmlspecialchars(strip_tags($this->state));
-        $this->city = htmlspecialchars(strip_tags($this->city));
-        $this->job_title = htmlspecialchars(strip_tags($this->job_title));
+        $this->state = ucwords(htmlspecialchars(strip_tags($this->state)));
+        $this->city = ucwords(htmlspecialchars(strip_tags($this->city)));
+        $this->job_title = ucwords(htmlspecialchars(strip_tags($this->job_title)));
         $this->level = htmlspecialchars(strip_tags($this->level));
 
         $this->rate = htmlspecialchars(strip_tags($this->rate));
