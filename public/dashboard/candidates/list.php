@@ -6,12 +6,10 @@
     }
 
     include_once '../../config/Database.php';
-    include_once '../../classes/User.php';
     include_once '../../classes/Candidate.php';
 
     $database = new Database();
     $db = $database->connect();
-    $user = new User($db);
     $candidate = new Candidate($db);
 
 
@@ -19,6 +17,10 @@
     $total_candidates = $candidate->getTotalCandidates();
     
     $candidates_per_page = 10;
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_text'])) {
+        $search_string = $_POST['search_text'];
+    }
 
     // if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['candidate_action']) && $_POST['candidate_action'] == 'delete') {
     //     die("We are preparing to delete the candidate.");
@@ -35,6 +37,22 @@
 
 
 ?>
+<!-- Topbar Search -->
+<div class="form-row">
+    <div class="col">
+        <form class="navbar-search border border-primary rounded-right" method='post'>
+            <div class="input-group">
+                <input type="text" name="search_text" class="form-control bg-light border-0 small" placeholder="Search for candidate by first name, last name, country, job title, or level"
+                    aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <h3>Candidates</h3>
     <table class="table">
